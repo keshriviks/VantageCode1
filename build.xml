@@ -1,0 +1,134 @@
+<!-- $Id$ -->
+<!-- 
+ * Copyright (c) 2004 FaceTime Communications, Inc. All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of FaceTime
+ * Communications, Inc. ("Confidential Information"). You shall not disclose
+ * such Confidential Information and shall use it only in accordance with the
+ * terms of the license agreement you entered into with FaceTime.
+ *
+ * FACETIME MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF
+ * THE SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+ * OR NON-INFRINGEMENT. FACETIME SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED
+ * BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING THIS SOFTWARE
+ * OR ITS DERIVATIVES.
+-->
+<project name="automation" default="jar" basedir=".">
+	<description>Vantage Automation</description>
+	<property name="vantage.home" location="C:\\Program Files (x86)\\Actiance\\Vantage"/>
+	<property name="id" value="automation"/>
+	<property name="dir.build" value="./build"/>
+	<property name="dir.current" location="."/>
+	<property name="java.compile.debug" value="true"/>
+    <property name="java.compile.optimize" value="true"/>
+	<property name="dir.package" location="./package"/>
+	<property name="dir.src.java" location="./src"/>
+	<property name="dir.resources" location="${dir.src.java}/main/resources"/>
+	<property name="log4j" location="file:///${basedir}/log4j.properties"/>
+	<property name="dir.schemas" location="./src/main/xsd"/>
+	<property name="main.class" value="org.testng.TestNG"/>
+	<property name="javac.path" location="C:\\Program Files (x86)\\Java\\jdk1.6.0_33\\bin\\javac.exe"/>
+	
+	<target name="buildsources" description="build xml sources">
+		<delete dir="${dir.build}"/>
+		<mkdir dir="${dir.build}/lib"/>
+		<exec executable="scomp.cmd">
+			<arg value="-out"/>
+			<arg value="${dir.build}/lib/IM.jar"/>
+			<arg value="-compiler"/>
+			<arg value="${javac.path}"/>
+			<arg value="-javasource"/>
+			<arg value="1.6"/>
+			<arg value="${dir.schemas}/conversation_import_exp.xsd"/>
+		</exec>
+		<exec executable="scomp.cmd">
+			<arg value="-out"/>
+			<arg value="${dir.build}/lib/Collab.jar"/>
+			<arg value="-compiler"/>
+			<arg value="${javac.path}"/>
+			<arg value="-javasource"/>
+			<arg value="1.6"/>
+			<arg value="${dir.schemas}/content_import_exp.xsd"/>
+		</exec>
+	</target>
+	
+	<target name="compile" depends="buildsources" description="compile the source">
+		<echo message="Building ${dir.current}"/>
+		<mkdir dir="${dir.build}/classes"/>
+		<copy todir="${dir.build}/lib" failonerror="yes">
+            <fileset dir="${vantage.home}/tomcat/common/lib">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${vantage.home}/tomcat/common/endorsed">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="./lib">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${dir.resources}">
+				<include name="log4j.xml"/>
+			</fileset>
+        </copy>
+		
+		
+		
+		<javac destdir="${dir.build}/classes" debug="${java.compile.debug}"
+	     optimize="${java.compile.optimize}" 
+	     memoryMaximumSize="640m" fork="true" includeantruntime="false">
+		    <classpath>
+				 <pathelement path="${dir.build}/classes"/>
+					<fileset dir="${dir.build}/lib">
+					  <include name="**/*.jar"/>
+					  <include name="log4j.xml"/>
+					</fileset>
+		    </classpath>
+	  
+		    <src path="${dir.src.java}">
+		    </src>
+	    </javac>
+	</target>
+	
+	<target name="jar" depends="compile"
+        description="generate the automation package">
+		<delete dir="${dir.package}"/>
+		<pathconvert property="libs.project" pathsep=" ">
+			<mapper>
+			  <chainedmapper>
+		 
+				<!-- remove absolute path -->
+				<flattenmapper />
+		 
+				<!-- add lib/ prefix -->
+				<globmapper from="*" to="lib/*" />
+			  </chainedmapper>
+			</mapper>
+		 
+			<path>
+		 
+			  <!-- lib.home contains all jar files, in several subdirectories -->
+			  <fileset dir="${dir.build}/lib">
+				<include name="**/*.jar" />
+				<include name="log4j.xml" />
+			  </fileset>
+			</path>
+		</pathconvert>
+  
+		<mkdir dir="${dir.package}"/>
+		<mkdir dir="${dir.package}/lib"/>
+		<copy todir="${dir.package}/lib" failonerror="no">
+            <fileset dir="${dir.build}/lib"/>
+        </copy>
+		<touch file="${dir.build}/MANIFEST.MF" datetime="01/01/1975 10:10 am"/>
+		<manifest file="${dir.build}/MANIFEST.MF">
+			<attribute name="Main-Class" value="${main.class}"/>
+			<attribute name="Class-Path" value="${libs.project}" />
+		</manifest>
+
+		<jar jarfile="${dir.package}/automation.jar"
+            basedir="${dir.build}/classes"
+            manifest="${dir.build}/MANIFEST.MF"
+            includes="**/*">
+        </jar>
+	</target>	
+</project>

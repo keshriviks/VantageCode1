@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Ant build file to build selenium(SMTP Export) project test and util .jars 
+     and to run the SMTP Export TestNG suite (exporter.xml)
+     
+     author Anief Shaik
+     date 26/06/2014
+ -->
+
+<project basedir="." default="build" name="VantageAutomation">
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="VantageAutomation.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="ext/activation.jar"/>
+         <pathelement location="ext/AdventNetAgentRuntimeUtilities.jar"/>
+         <pathelement location="ext/AdventNetAgentUtilities.jar"/>
+         <pathelement location="ext/AdventNetLogging.jar"/>
+         <pathelement location="ext/AdventNetRuleEngine.jar"/>
+         <pathelement location="ext/AdventNetSnmp.jar"/>
+         <pathelement location="ext/AdventNetSnmpAgent.jar"/>
+         <pathelement location="ext/AdventNetSNMPAgentTools.jar"/>
+         <pathelement location="ext/ant.jar"/>
+         <pathelement location="ext/ant-launcher.jar"/>
+         <pathelement location="ext/asm-3.3.1.jar"/>
+         <pathelement location="ext/axis.jar"/>
+         <pathelement location="ext/axis-ant.jar"/>
+         <pathelement location="ext/batik-all-1.7.jar"/>
+         <pathelement location="ext/batik-awt-util.jar"/>
+         <pathelement location="ext/batik-dom.jar"/>
+         <pathelement location="ext/batik-svggen.jar"/>
+         <pathelement location="ext/batik-util.jar"/>
+         <pathelement location="ext/batik-xml.jar"/>
+         <pathelement location="ext/bb-webService.jar"/>
+         <pathelement location="ext/bcmail-jdk14-132.jar"/>
+         <pathelement location="ext/bcmail-jdk15-1.44.jar"/>
+         <pathelement location="ext/bcprov-jdk14-132.jar"/>
+         <pathelement location="ext/bcprov-jdk15-1.44.jar"/>
+         <pathelement location="ext/bonecp-0.7.1.RELEASE.jar"/>
+         <pathelement location="ext/bsh-2.0b4.jar"/>
+         <pathelement location="ext/c3p0-0.9.1.1.jar"/>
+         <pathelement location="ext/cewolf-0.12.0.jar"/>
+         <pathelement location="ext/Collab.jar"/>
+         <pathelement location="ext/commons-cli-1.0.jar"/>
+         <pathelement location="ext/commons-codec-1.3.jar"/>
+         <pathelement location="ext/commons-codec-1.4.jar"/>
+         <pathelement location="ext/commons-collections-3.1.jar"/>
+         <pathelement location="ext/commons-compress-1.2.jar"/>
+         <pathelement location="ext/commons-dbcp-1.2.1.jar"/>
+         <pathelement location="ext/commons-discovery-0.2.jar"/>
+         <pathelement location="ext/commons-el.jar"/>
+         <pathelement location="ext/commons-exec-1.1.jar"/>
+         <pathelement location="ext/commons-fileupload-1.0.jar"/>
+         <pathelement location="ext/commons-httpclient-3.0.jar"/>
+         <pathelement location="ext/commons-io-20030203.000550.jar"/>
+         <pathelement location="ext/commons-lang-2.2.jar"/>
+         <pathelement location="ext/commons-lang-2.6.jar"/>
+         <pathelement location="ext/commons-logging.jar"/>
+         <pathelement location="ext/commons-logging-1.1.1.jar"/>
+         <pathelement location="ext/commons-math-2.0.jar"/>
+         <pathelement location="ext/commons-net-1.3.0.jar"/>
+         <pathelement location="ext/commons-pool-1.2.jar"/>
+         <pathelement location="ext/commons-validator.jar"/>
+         <pathelement location="ext/components.jar"/>
+         <pathelement location="ext/concurrent.jar"/>
+         <pathelement location="ext/cxf-2.5.2.jar"/>
+         <pathelement location="ext/fluent-hc-4.2.4.jar"/>
+         <pathelement location="ext/FontBox-0.1.0-dev.jar"/>
+         <pathelement location="ext/fontbox-1.7.1.jar"/>
+         <pathelement location="ext/fop.jar"/>
+         <pathelement location="ext/fop-transcoder.jar"/>
+         <pathelement location="ext/fop-transcoder-allinone.jar"/>
+         <pathelement location="ext/FPLibrary.jar"/>
+         <pathelement location="ext/ftp4j-1.7.1.jar"/>
+         <pathelement location="ext/guava-13.0.1.jar"/>
+         <pathelement location="ext/httpclient-4.2.4.jar"/>
+         <pathelement location="ext/httpcore-4.2.4.jar"/>
+         <pathelement location="ext/IM.jar"/>
+         <pathelement location="ext/imstack.jar"/>
+         <pathelement location="ext/isg-coreserver.jar"/>
+         <pathelement location="ext/itext-1.3.jar"/>
+         <pathelement location="ext/iTextAsian.jar"/>
+         <pathelement location="ext/jackrabbit-api-1.4.jar"/>
+         <pathelement location="ext/jackrabbit-core-1.4.6.jar"/>
+         <pathelement location="ext/jackrabbit-jcr-commons-1.4.2.jar"/>
+         <pathelement location="ext/jackrabbit-text-extractors-1.4.jar"/>
+         <pathelement location="ext/jackson-core-asl-1.9.2.jar"/>
+         <pathelement location="ext/jackson-jaxrs-1.9.2.jar"/>
+         <pathelement location="ext/jackson-mapper-asl-1.9.2.jar"/>
+         <pathelement location="ext/jackson-xc-1.9.2.jar"/>
+         <pathelement location="ext/jakarta-oro.jar"/>
+         <pathelement location="ext/jasper-compiler.jar"/>
+         <pathelement location="ext/jasper-runtime.jar"/>
+         <pathelement location="ext/JavaBridge.jar"/>
+         <pathelement location="ext/jaxb-api-2.2.3.jar"/>
+         <pathelement location="ext/jaxb-api-2.2.4.jar"/>
+         <pathelement location="ext/jaxb-impl-2.2.4-1.jar"/>
+         <pathelement location="ext/jaxb-xjc-2.2.4-1.jar"/>
+         <pathelement location="ext/jaxrpc.jar"/>
+         <pathelement location="ext/jcifs-krb5-1.2.9.jar"/>
+         <pathelement location="ext/jcommander-1.12.jar"/>
+         <pathelement location="ext/jcommon-1.0.10.jar"/>
+         <pathelement location="ext/jcore.jar"/>
+         <pathelement location="ext/jcore-resources.jar"/>
+         <pathelement location="ext/jdom.jar"/>
+         <pathelement location="ext/jeci.jar"/>
+         <pathelement location="ext/jeci-resources.jar"/>
+         <pathelement location="ext/jempbox-1.7.1.jar"/>
+         <pathelement location="ext/jersey-client-1.12.jar"/>
+         <pathelement location="ext/jersey-core-1.12.jar"/>
+         <pathelement location="ext/jersey-json-1.12.jar"/>
+         <pathelement location="ext/jersey-multipart-1.12.jar"/>
+         <pathelement location="ext/jersey-server-1.12.jar"/>
+         <pathelement location="ext/jersey-servlet-1.12.jar"/>
+         <pathelement location="ext/jettison-1.1.jar"/>
+         <pathelement location="ext/jfreechart-1.0.6.jar"/>
+         <pathelement location="ext/json-20080701.jar"/>
+         <pathelement location="ext/jsp-api.jar"/>
+         <pathelement location="ext/jsr311-api-1.1.1.jar"/>
+         <pathelement location="ext/jss33.jar"/>
+         <pathelement location="ext/junit-4.10.jar"/>
+         <pathelement location="ext/krb.jar"/>
+         <pathelement location="ext/ldap.jar"/>
+         <pathelement location="ext/ldapbp.jar"/>
+         <pathelement location="ext/ldapsec.jar"/>
+         <pathelement location="ext/linkedin-j.jar"/>
+         <pathelement location="ext/lucene-core-2.0.0.jar"/>
+         <pathelement location="ext/lucene-demos-2.0.0.jar"/>
+         <pathelement location="ext/mail.jar"/>
+         <pathelement location="ext/Merlia.jar"/>
+         <pathelement location="ext/mimepull-1.3.jar"/>
+         <pathelement location="ext/mysql-connector-java-5.1.22.jar"/>
+         <pathelement location="ext/naming-common.jar"/>
+         <pathelement location="ext/naming-factory.jar"/>
+         <pathelement location="ext/naming-java.jar"/>
+         <pathelement location="ext/naming-resources.jar"/>
+         <pathelement location="ext/neethi-3.0.1.jar"/>
+         <pathelement location="ext/oauth-client-1.12.jar"/>
+         <pathelement location="ext/oauth-server-1.12.jar"/>
+         <pathelement location="ext/oauth-signature-1.12.jar"/>
+         <pathelement location="ext/ojdbc6-11.2.0.3.0.jar"/>
+         <pathelement location="ext/opencsv-2.3.jar"/>
+         <pathelement location="ext/Oranxo.jar"/>
+         <pathelement location="ext/oservice.jar"/>
+         <pathelement location="ext/PDFBox-0.7.3.jar"/>
+         <pathelement location="ext/persistence-api-1.0.2.jar"/>
+         <pathelement location="ext/php-script.jar"/>
+         <pathelement location="ext/poi-3.1-FINAL-20080629.jar"/>
+         <pathelement location="ext/poi-contrib-3.1-FINAL-20080629.jar"/>
+         <pathelement location="ext/poi-scratchpad-3.1-FINAL-20080629.jar"/>
+         <pathelement location="ext/protobuf-java-2.1.0.jar"/>
+         <pathelement location="ext/quartz-all-2.1.1.jar"/>
+         <pathelement location="ext/saaj.jar"/>
+         <pathelement location="ext/selenium-firefox-driver-2.39.0.jar"/>
+         <pathelement location="ext/selenium-server-standalone-2.39.0.jar"/>     
+         <pathelement location="ext/servlet-api.jar"/>
+         <pathelement location="ext/signpost-core-1.2.1.1.jar"/>
+         <pathelement location="ext/snakeyaml-1.6.jar"/>
+         <pathelement location="ext/soap.jar"/>
+         <pathelement location="ext/sqljdbc4-4.0.jar"/>
+         <pathelement location="ext/sqlserver.jar"/>
+         <pathelement location="ext/stax2-api-3.1.1.jar"/>
+         <pathelement location="ext/stax-api-1.0.1.jar"/>
+         <pathelement location="ext/stax-api-1.0-2.jar"/>
+         <pathelement location="ext/STComm.jar"/>
+         <pathelement location="ext/stcommsrvrtk.jar"/>
+         <pathelement location="ext/testng-6.8.8.jar"/>
+         <pathelement location="ext/tgp.jar"/>
+         <pathelement location="ext/tika-app-1.2.jar"/>
+         <pathelement location="ext/tm-extractors-0.4.jar"/>
+         <pathelement location="ext/twitter4j-core-2.1.1-SNAPSHOT.jar"/>
+         <pathelement location="ext/unrar.jar"/>
+         <pathelement location="ext/Vantage-SDK.jar"/>
+         <pathelement location="ext/webdriver-remote-client-0.9.7089-sources.jar"/>
+         <pathelement location="ext/webmacro.jar"/>
+         <pathelement location="ext/woodstox-core-asl-4.1.1.jar"/>
+         <pathelement location="ext/wsdl4j-1.6.2.jar"/>
+         <pathelement location="ext/wss4j-1.6.4.jar"/>
+         <pathelement location="ext/xercesImpl.jar"/>
+         <pathelement location="ext/xFunction.jar"/>
+         <pathelement location="ext/xml-apis.jar"/>
+         <pathelement location="ext/xmlbeans-2.5.0.jar"/>
+         <pathelement location="ext/xmlgraphics-commons-1.5rc1.jar"/>
+         <pathelement location="ext/xmlschema-core-2.0.1.jar"/>
+         <pathelement location="ext/xpp3-1.1.3.4.M.jar"/>
+         <pathelement location="ext/javacsv.jar"/>
+      </path>
+	
+	<path id="SMTPExportTestSuite.classpath">
+        <pathelement location="bin/smtpexportertests.jar"/>
+    </path>
+	
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src/main/java">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src/main/resources">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src/main/xsd">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+	
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+	
+	<target depends="init" name="build">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/main/java/com/actiance/tests/selenium"/>
+        	<src path="src/main/java/com/actiance/tests/exporter"/>
+        	<src path="src/main/java/com/actiance/tests/support"/>
+        	<src path="src/main/java/com/actiance/tests/vantage"/>
+            <src path="src/main/resources"/>
+            <src path="src/main/xsd"/>
+            <classpath refid="VantageAutomation.classpath"/>
+        </javac>
+		<jar destfile="bin/smtpexportertests.jar"
+             basedir="bin/com/actiance/tests/selenium"
+        />
+    </target>
+	
+    <target depends="build" name="run_smtpexportertests">
+        <java classname="org.testng.TestNG">
+		<arg line="src/main/resources/exporter.xml"/>
+            <classpath refid="VantageAutomation.classpath"/>
+			<classpath refid="SMTPExportTestSuite.classpath"/>
+        </java>
+    </target>
+  
+</project>
